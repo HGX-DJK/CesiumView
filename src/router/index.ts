@@ -14,6 +14,11 @@ const RootRoute: Array<RouteRecordRaw> = [
   },
   //几何相关
   {
+    path: '/entitiesFeature',
+    name: "EntitiesFeature",
+    component: () => import("@/components/geometry/EntitiesFeature.vue")
+  },
+  {
     path: '/drawGeometry',
     name: "DrawGeometry",
     component: () => import("@/components/geometry/DrawGeometry.vue")

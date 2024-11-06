@@ -12,7 +12,6 @@
 import { onUnmounted, ref, onBeforeMount, onMounted } from "vue";
 import { ViewerStore } from "@/store";
 import { getGeojson }  from "@/api/api.js";
-
 import LineFlickerMaterialProperty from "@/utils/cesiumCtrl/materialAnimate/lineMaterial.js";
 const viewerStore = ViewerStore();
 const viewer = viewerStore.viewer;
@@ -38,7 +37,7 @@ const onStart = () => {
       for (let i = 0; i < entities.length; i++) {
           let entity = entities[i];
           entity.polyline.width = 3.0;
-          // 设置材质
+          //设置道路线条实体的材质
           entity.polyline.material = new LineFlickerMaterialProperty({
               color: Cesium.Color.YELLOW,
               // 设置随机变化速度
@@ -63,6 +62,8 @@ onUnmounted(() => {
   //   url: "http://data.marsgis.cn/terrain",
   // });
 });
+
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+</style>

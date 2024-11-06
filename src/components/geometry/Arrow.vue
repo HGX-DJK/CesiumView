@@ -28,10 +28,7 @@ const drawPincerArrow = () => {
 const onClear = () => {
   Arrow.clearAll();
 };
-onUnmounted(() => {
-  onClear();
-  viewer.scene.terrainProvider = new Cesium.EllipsoidTerrainProvider({});
-});
+
 
 onMounted(() => {
   // viewer.scene.terrainProvider = new Cesium.CesiumTerrainProvider({
@@ -40,6 +37,11 @@ onMounted(() => {
 
   Arrow.disable();
   Arrow.init(viewer);
+});
+
+onUnmounted(() => {
+  onClear();
+  viewer.scene.terrainProvider = new Cesium.EllipsoidTerrainProvider({});
 });
 
 </script>

@@ -12,16 +12,20 @@ export const MenuStore = defineStore("menu", {
                     show: false,
                     children: [
                         {
+                            name: "基本要素",
+                            path: "entitiesFeature"
+                        },
+                        {
                             name: "绘制",
-                            path: "drawGeometry"
+                            path: "/drawGeometry"
                         },
                         {
                             name: "量测",
-                            path: "geometryMeaure"
+                            path: "/geometryMeaure"
                         },
                         {
                             name: "态势图",
-                            path: "arrow"
+                            path: "/arrow"
                         },
                     ]
                 },
