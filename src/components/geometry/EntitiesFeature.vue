@@ -30,9 +30,8 @@ import { getGeojson } from "@/api/api.js";
 
 const viewerStore = ViewerStore();
 const viewer = viewerStore.viewer
-const scene = viewer.scene;
 
-//实体一 添加多边形面
+ //添加3D多边形面
 const addPolygon = () => {
   // const entities = viewer.entities.add({
   //   polygon: {
@@ -48,8 +47,6 @@ const addPolygon = () => {
   //     outlineColor: Cesium.Color.BLACK,
   //   }
   // })
-
-  //添加3D多边形面
   const entities1 = viewer.entities.add({
     polygon: {
       hierarchy: Cesium.Cartesian3.fromDegreesArray([
@@ -61,7 +58,7 @@ const addPolygon = () => {
       outline: true,
       outlineColor: Cesium.Color.BLACK,
     }
-  })
+  });
   viewer.zoomTo(entities1);
 }
 
@@ -92,13 +89,14 @@ const addEllipseGraphics = () => {
       semiMajorAxis: 5000,
       material: Cesium.Color.RED.withAlpha(0.5),
     })
-  })
+  });
   viewer.zoomTo(ellipse);
 }
 
 //添加三维走廊
 const addCorridorGraphics = () => {
   const corridor = viewer.entities.add({
+    //走廊图形
     corridor: new Cesium.CorridorGraphics({
       extrudedHeight: 10000,
       height: 1000,
@@ -109,7 +107,7 @@ const addCorridorGraphics = () => {
         -104.053011, 43.002989, -104.053011, 41.003906, -105.728954, 40.998429,
       ])
     })
-  })
+  });
   viewer.zoomTo(corridor);
 }
 
@@ -125,7 +123,7 @@ const addCylinderGraphics = () => {
       outline: true,
       numberOfVerticalLines: 20
     })
-  })
+  });
   viewer.zoomTo(cylinder);
 }
 
@@ -268,8 +266,7 @@ const formatData = (features) => {
   return result;
 };
 
-
-
+//清除添加的所有实体
 const clear = () => {
   viewer.entities.removeAll();
 }

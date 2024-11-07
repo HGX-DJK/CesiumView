@@ -6,7 +6,7 @@
 import { onMounted } from 'vue';
 import { ViewerStore } from "@/store";
 const viewerStore = ViewerStore()
-
+//注册Cesium Ion令牌
 Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2YjA2MDlkOC02YjU2LTRhM2QtYmI3Zi1lMDI3ZmQ0MTFiNWQiLCJpZCI6Mzk0OTMsImlhdCI6MTcyNjMwMDUxOX0.H9gvu2kRlbbfWS27EMXG1daljQfhOMSNQU__OoWVigk";
 //初始化地图
 function initMap() {

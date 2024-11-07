@@ -93,11 +93,7 @@ class MeasureTool {
    */
   transformWGS84ToCartographic(position) {
     return position
-      ? Cesium.Cartographic.fromDegrees(
-          position.lng || position.lon,
-          position.lat,
-          position.alt
-        )
+      ? Cesium.Cartographic.fromDegrees( position.lng || position.lon, position.lat, position.alt)
       : Cesium.Cartographic.ZERO;
   }
 
@@ -110,57 +106,58 @@ class MeasureTool {
    */
   getCatesian3FromPX(px) {
     if (this._viewer && px) {
-      var picks = this._viewer.scene.drillPick(px);
       var cartesian = null;
       var isOn3dtiles = false,isOnTerrain = false;
+      var picks = this._viewer.scene.drillPick(px);
       // drillPick
       for (let i in picks) {
         let pick = picks[i];
         if ((pick && pick.primitive instanceof Cesium.Cesium3DTileFeature) ||(pick && pick.primitive instanceof Cesium.Cesium3DTileset) ||(pick && pick.primitive instanceof Cesium.Model)) {
-          //模型上拾取
-          isOn3dtiles = true;
+            //模型上拾取
+            isOn3dtiles = true;
         }
-        // 3dtilset
-        if (isOn3dtiles) {
-          this._viewer.scene.pick(px); // pick
-          cartesian = this._viewer.scene.pickPosition(px);
-          if (cartesian) {
-            let cartographic = Cesium.Cartographic.fromCartesian(cartesian);
-            if (cartographic.height < 0) cartographic.height = 0;
-            let lon = Cesium.Math.toDegrees(cartographic.longitude),lat = Cesium.Math.toDegrees(cartographic.latitude),
-            height = cartographic.height;
-            cartesian = this.transformWGS84ToCartesian({
-              lng: lon,
-              lat: lat,
-              alt: height,
-            });
-          }
+        // 判断3dtilset
+        if(isOn3dtiles) {
+            this._viewer.scene.pick(px); // pick
+            cartesian = this._viewer.scene.pickPosition(px);
+            if (cartesian) {
+                let cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+                if (cartographic.height < 0) cartographic.height = 0;
+                let lon = Cesium.Math.toDegrees(cartographic.longitude),lat = Cesium.Math.toDegrees(cartographic.latitude),
+                height = cartographic.height;
+                cartesian = this.transformWGS84ToCartesian({
+                  lng: lon,
+                  lat: lat,
+                  alt: height,
+                });
+            };
         }
-      }
-      // 地形
-      let boolTerrain =
-        this._viewer.terrainProvider instanceof Cesium.EllipsoidTerrainProvider;
-      // Terrain
+      };
+
+      /**
+       * Cesium.EllipsoidTerrainProvider 表示的是默认的“没有地形”的提供器。如果 terrainProvider 
+       * 被设置为 Cesium.EllipsoidTerrainProvider，
+       * 则说明场景中没有加载真实的地形数据，地图展示的是一个光滑的椭球体，而不包含任何高程信息
+      */
+      let boolTerrain = this._viewer.terrainProvider instanceof Cesium.EllipsoidTerrainProvider;
+      // 有加载地形的
       if (!isOn3dtiles && !boolTerrain) {
-        var ray = this._viewer.scene.camera.getPickRay(px);
-        if (!ray) return null;
-        cartesian = this._viewer.scene.globe.pick(ray, this._viewer.scene);
-        isOnTerrain = true;
-      }
-      // 地球
+          var ray = this._viewer.scene.camera.getPickRay(px);
+          if (!ray) return null;
+          cartesian = this._viewer.scene.globe.pick(ray, this._viewer.scene);
+          isOnTerrain = true;
+      };
+      //只有地球，没有地形提供器的
       if (!isOn3dtiles && !isOnTerrain && boolTerrain) {
-        cartesian = this._viewer.scene.camera.pickEllipsoid(
-          px,
-          this._viewer.scene.globe.ellipsoid
-        );
-      }
+          cartesian = this._viewer.scene.camera.pickEllipsoid(px,this._viewer.scene.globe.ellipsoid);
+      };
       if (cartesian) {
-        let position = this.transformCartesianToWGS84(cartesian);
-        if (position.alt < 0) {
-          cartesian = this.transformWGS84ToCartesian(position, 0.1);
-        }
-        return cartesian;
-      }
+          let position = this.transformCartesianToWGS84(cartesian);
+          if (position.alt < 0) {
+            cartesian = this.transformWGS84ToCartesian(position, 0.1);
+          }
+          return cartesian;
+      };
       return false;
     }
   }
@@ -173,16 +170,13 @@ class MeasureTool {
     let distance = 0;
     for (let i = 0; i < positions.length - 1; i++) {
       let point1cartographic = this.transformWGS84ToCartographic(positions[i]);
-      let point2cartographic = this.transformWGS84ToCartographic(
-        positions[i + 1]
-      );
+      let point2cartographic = this.transformWGS84ToCartographic( positions[i + 1]);
       let geodesic = new Cesium.EllipsoidGeodesic();
+      //计算两个端点之间的地表距离
       geodesic.setEndPoints(point1cartographic, point2cartographic);
       let s = geodesic.surfaceDistance;
-      s = Math.sqrt(
-        Math.pow(s, 2) +
-          Math.pow(point2cartographic.height - point1cartographic.height, 2)
-      );
+      //通过勾股定理计算斜边长度
+      s = Math.sqrt(Math.pow(s, 2) + Math.pow(point2cartographic.height - point1cartographic.height, 2));
       distance = distance + s;
     }
     return distance.toFixed(3);
@@ -218,36 +212,35 @@ class MeasureTool {
    */
   drawLineMeasureGraphics(options = {}) {
     if (this._viewer && options) {
-      var positions = [],
-        _lineEntity = new Cesium.Entity(),
-        $this = this,
-        lineObj,
-        _handlers = new Cesium.ScreenSpaceEventHandler(
+      var positions = [], _lineEntity = new Cesium.Entity(), $this = this, lineObj,
+      _handlers = new Cesium.ScreenSpaceEventHandler(
           this._viewer.scene.canvas
-        );
-      // left
+      );
+      //鼠标左键点击事件
       _handlers.setInputAction(function (movement) {
         var cartesian = $this.getCatesian3FromPX(movement.position);
         if (cartesian && cartesian.x) {
           if (positions.length == 0) {
-            positions.push(cartesian.clone());
-          }
+              positions.push(cartesian.clone());
+          };
           // 添加量测信息点
           _addInfoPoint(cartesian);
           positions.push(cartesian);
         }
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
+      //鼠标移动事件
       _handlers.setInputAction(function (movement) {
         var cartesian = $this.getCatesian3FromPX(movement.endPosition);
         if (positions.length >= 2) {
           if (cartesian && cartesian.x) {
-            positions.pop();
+            positions.pop(); //移除数组中的最后一个的元素
             positions.push(cartesian);
           }
         }
       }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
-      // right
+
+      // 鼠标右键点击事件
       _handlers.setInputAction(function (movement) {
         _handlers.destroy();
         _handlers = null;
@@ -264,40 +257,35 @@ class MeasureTool {
       }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
 
       _lineEntity.polyline = {
-        width: options.width || 5,
-        material: options.material || Cesium.Color.BLUE.withAlpha(0.8),
-        clampToGround: false,
+          width: options.width || 5,
+          material: options.material || Cesium.Color.BLUE.withAlpha(0.8),
+          clampToGround: false,
       };
       _lineEntity.polyline.positions = new Cesium.CallbackProperty(function () {
-        return positions;
+         return positions;
       }, false);
 
       lineObj = this._drawLayer.entities.add(_lineEntity);
 
       //添加坐标点
       function _addInfoPoint(position) {
-        var _labelEntity = new Cesium.Entity();
-        _labelEntity.position = position;
-        _labelEntity.point = {
-          pixelSize: 10,
-          outlineColor: Cesium.Color.BLUE,
-          outlineWidth: 5,
-        };
-        _labelEntity.label = {
-          text:
-            (
-              $this.getPositionDistance(
-                $this.transformCartesianArrayToWGS84Array(positions)
-              ) / 1000
-            ).toFixed(4) + "公里",
-          show: true,
-          showBackground: true,
-          font: "14px monospace",
-          horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
-          verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-          pixelOffset: new Cesium.Cartesian2(-10, -10), //left top
-        };
-        $this._drawLayer.entities.add(_labelEntity);
+          var _labelEntity = new Cesium.Entity();
+          _labelEntity.position = position;
+          _labelEntity.point = {
+              pixelSize: 10,
+              outlineColor: Cesium.Color.BLUE,
+              outlineWidth: 5,
+          };
+          _labelEntity.label = {
+              text:($this.getPositionDistance($this.transformCartesianArrayToWGS84Array(positions))/1000).toFixed(4) + "公里",
+              show: true,
+              showBackground: true,
+              font: "14px monospace",
+              horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+              verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+              pixelOffset: new Cesium.Cartesian2(-10, -10), //left top
+          };
+          $this._drawLayer.entities.add(_labelEntity);
       }
     }
   }
