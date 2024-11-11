@@ -23,7 +23,7 @@ function initMap() {
         scene3DOnly: true,           //如果设置为true，则所有几何图形以3D模式绘制以节约GPU资源
         selectionIndicator: true,    //控制是否显示选择指示器，用于指示当前选择的地图对象。
         baselLayerPicker: true,      //控制是否显示基础图层选择器，允许用户选择不同的基础图层。
-
+        //添加ArcGis瓦片底图图层
         imageryProvider: new Cesium.ArcGisMapServerImageryProvider({
             url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer",
         }),

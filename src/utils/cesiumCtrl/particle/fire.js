@@ -3,33 +3,33 @@ export default class FireEffect {
   constructor(viewer) {
       this.viewer = viewer;
       this.viewModel = {
-        // emissionRate: 5,
-        // gravity: 0.0, //设置重力参数
-        // minimumParticleLife: 1,
-        // maximumParticleLife: 6,
-        // minimumSpeed: 1.0, //粒子发射的最小速度
-        // maximumSpeed: 4.0, //粒子发射的最大速度
-        // startScale: 0.0,
-        // endScale: 10.0,
-        // particleSize: 25.0,
+          // emissionRate: 5,
+          // gravity: 0.0, //设置重力参数
+          // minimumParticleLife: 1,
+          // maximumParticleLife: 6,
+          // minimumSpeed: 1.0, //粒子发射的最小速度
+          // maximumSpeed: 4.0, //粒子发射的最大速度
+          // startScale: 0.0,
+          // endScale: 10.0,
+          // particleSize: 25.0,
 
-        // startScale: 3,
-        // endScale: 1.5,
-        // minimumParticleLife: 1.5,
-        // maximumParticleLife: 1.8,
-        // minimumSpeed: 7,
-        // maximumSpeed: 9,
-        // particleSize: 2,
-        // emissionRate: 200,
+          // startScale: 3,
+          // endScale: 1.5,
+          // minimumParticleLife: 1.5,
+          // maximumParticleLife: 1.8,
+          // minimumSpeed: 7,
+          // maximumSpeed: 9,
+          // particleSize: 2,
+          // emissionRate: 200,
 
-        startScale: 1, // 应用于粒子生命开始时的图像的初始比例。
-        endScale: 4,
-        minimumParticleLife: 1,
-        maximumParticleLife: 3, // 设置粒子生命可能持续时间的最大边界(以秒为单位)，在此范围内，将随机选择粒子的实际生命。
-        minimumSpeed: 1,
-        maximumSpeed: 8, // 设置以米/每秒为单位的粒子的实际速度将被随机选择的最大边界。
-        particleSize: 20,
-        emissionRate: 5,
+          startScale: 1, // 应用于粒子生命开始时的图像的初始比例。
+          endScale: 4,
+          minimumParticleLife: 1,
+          maximumParticleLife: 3, // 设置粒子生命可能持续时间的最大边界(以秒为单位)，在此范围内，将随机选择粒子的实际生命。
+          minimumSpeed: 1,
+          maximumSpeed: 8, // 设置以米/每秒为单位的粒子的实际速度将被随机选择的最大边界。
+          particleSize: 20,
+          emissionRate: 5,
       };
       this.emitterModelMatrix = new Cesium.Matrix4();
       this.translation = new Cesium.Cartesian3();
@@ -88,8 +88,11 @@ export default class FireEffect {
         // emitterModelMatrix: Cesium.Transforms.eastNorthUpToFixedFrame(Cesium.Cartesian3.fromDegrees(120.36, 36.09)),
 
         // v2版本
-        // 系统的粒子发射器
-        emitter: new Cesium.ConeEmitter(Cesium.Math.toRadians(45.0)), //BoxEmitter 盒形发射器，ConeEmitter 锥形发射器，SphereEmitter 球形发射器，CircleEmitter圆形发射器
+        /**
+         * 系统的粒子发射器
+         * BoxEmitter 盒形发射器，ConeEmitter 锥形发射器，SphereEmitter 球形发射器，CircleEmitter圆形发射器
+        */
+        emitter: new Cesium.ConeEmitter(Cesium.Math.toRadians(45.0)), 
 
         image: "/images/fire.png",
         startColor: Cesium.Color.RED,
@@ -120,8 +123,7 @@ export default class FireEffect {
             new Cesium.ParticleBurst({ time: 0.8, minimum, maximum }),
             new Cesium.ParticleBurst({ time: 0.9, minimum, maximum }),
         ],
-      })
-    );
+    }));
     this.particleSystem = particleSystem;
     this.preUpdateEvent();
   }
@@ -131,25 +133,21 @@ export default class FireEffect {
     let _this = this;
     this.viewer.scene.preUpdate.addEventListener(function (scene, time) {
         //发射器地理位置
-        _this.particleSystem.modelMatrix = _this.computeModelMatrix(
-          _this.entity,
-          time
-        );
+        _this.particleSystem.modelMatrix = _this.computeModelMatrix( _this.entity,time );
         //发射器局部位置
-        _this.particleSystem.emitterModelMatrix =
-          _this.computeEmitterModelMatrix();
+        _this.particleSystem.emitterModelMatrix =  _this.computeEmitterModelMatrix();
         // 将发射器旋转
         if (_this.viewModel.spin) {
             _this.viewModel.heading += 1.0;
             _this.viewModel.pitch += 1.0;
             _this.viewModel.roll += 1.0;
-        }
+        };
     });
-  }
+  };
 
   computeModelMatrix(entity, time) {
      return entity.computeModelMatrix(time, new Cesium.Matrix4());
-  }
+  };
 
   computeEmitterModelMatrix() {
       this.hpr = Cesium.HeadingPitchRoll.fromDegrees(0.0, 0.0, 0.0, this.hpr);
@@ -157,7 +155,7 @@ export default class FireEffect {
       this.trs.rotation = Cesium.Quaternion.fromHeadingPitchRoll(this.hpr,this.rotation);
 
       return Cesium.Matrix4.fromTranslationRotationScale( this.trs,this.emitterModelMatrix );
-  }
+  };
 
   removeEvent() {
       this.viewer.scene.preUpdate.removeEventListener(this.preUpdateEvent, this);
@@ -166,14 +164,12 @@ export default class FireEffect {
       this.rotation = undefined;
       this.hpr = undefined;
       this.trs = undefined;
-  }
+  };
 
   //移除粒子特效
   remove() {
-    () => {
-      return this.removeEvent();
-    }; //清除事件
+    () => { return this.removeEvent(); }; //清除事件
     this.viewer.scene.primitives.remove(this.particleSystem); //删除粒子对象
     this.viewer.entities.remove(this.entity); //删除entity
-  }
+  };
 }

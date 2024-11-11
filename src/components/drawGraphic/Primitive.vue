@@ -9,11 +9,14 @@
 
 
 <script setup>
+import { onMounted } from "vue";
 import { ViewerStore } from "@/store";
 import { getGeojson } from "@/api/api.js";
+import Dialog from "@/utils/cesiumCtrl/dialog";
 
 const viewerStore = ViewerStore();
 const viewer = viewerStore.viewer;
+const dialogs = ref();
 // 先把广告牌实例化，然后再添加到场景中
 const billboardsCollection = viewer.scene.primitives.add(
     new Cesium.BillboardCollection()
@@ -73,20 +76,59 @@ const formatData = (features) => {
 };
 
 viewer.camera.setView({
-  // 从以度为单位的经度和纬度值返回笛卡尔3位置。
-  destination: Cesium.Cartesian3.fromDegrees(120.36, 36.09, 40000),
+    // 从以度为单位的经度和纬度值返回笛卡尔3位置。
+    destination: Cesium.Cartesian3.fromDegrees(120.36, 36.09, 40000),
 });
 
 const onClear = () => {
-  billboardsCollection?.removeAll();
+    billboardsCollection?.removeAll();
 };
 
+//添加点击事件
+function addClickeEvent() {
+    const scene = viewer.scene;
+    // ScreenSpaceEventHandler的参数是要添加事件的元素，直接给整个画布添加
+    const handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+    handler.setInputAction((e) => {
+        console.log("xxxx", e);
+        // 获取点击的实体
+        const pick = scene.pick(e.position);
+        // 判断点击的是不是点位
+        if (Cesium.defined(pick) && pick.collection._id.indexOf("mark") > -1) {
+            // 拿到点位的属性信息
+            const property = pointFeatures[pick.primitive._index];
+            // 弹窗所需的参数
+            const opts = {
+                viewer,
+                position: { _value: pick.primitive.position,},
+                title:   property.properties.name,
+                content: property.properties.address,
+                // slotTitle: h('span', {
+                //   innerHTML: pick.id.name,
+                // })
+                // slotContent: h(DialogContent, {
+                //   onClose: handleClose
+                // }, {
+                //   content: () => pick.id.properties.address._value
+                // })
+            };
+            if (dialogs.value) {
+                // 只允许一个弹窗出现
+                dialogs.value.windowClose();
+            };
+            dialogs.value = new Dialog(opts);
+        }
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+}
+
+onMounted(() => {
+    addClickeEvent()
+})
 onUnmounted(() => {
-  onClear();
+    onClear();
 });
 
 </script>
 
 
-<style lang='less' scoped>
-</style>
+<style lang='less' scoped></style>

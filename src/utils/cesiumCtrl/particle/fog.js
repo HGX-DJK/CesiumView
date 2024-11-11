@@ -4,10 +4,7 @@ class FogEffect {
     if (!viewer) throw new Error("no viewer object!");
     options = options || {};
     this.visibility = Cesium.defaultValue(options.visibility, 0.1); // 能见度
-    this.color = Cesium.defaultValue(
-      options.color,
-      new Cesium.Color(0.8, 0.8, 0.8, 0.5)
-    );
+    this.color = Cesium.defaultValue(options.color,new Cesium.Color(0.8, 0.8, 0.8, 0.5));
     this.viewer = viewer;
     this.init();
   }
@@ -17,12 +14,12 @@ class FogEffect {
       name: "czm_fog",
       fragmentShader: this.fog(),
       uniforms: {
-        visibility: () => {
-          return this.visibility;
-        },
-        fogColor: () => {
-          return this.color;
-        },
+          visibility: () => {
+            return this.visibility;
+          },
+          fogColor: () => {
+            return this.color;
+          },
       },
     });
     this.fogStage.enabled = false;

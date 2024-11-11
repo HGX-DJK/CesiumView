@@ -14,6 +14,7 @@ import { sleep } from "@/utils";
 const viewerStore = ViewerStore();
 const viewer = viewerStore.viewer;
 let fire = "";
+//初始化渲染火焰
 const onInit = async () => {
     viewer.camera.flyTo({
         destination: Cesium.Cartesian3.fromDegrees(120.361, 36.0885, 80),  // 从以度为单位的经度和纬度值返回笛卡尔3位置。
