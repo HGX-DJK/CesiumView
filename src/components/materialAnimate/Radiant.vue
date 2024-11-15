@@ -1,8 +1,9 @@
+<!--辐射圈-->
 <template>
   <div class="container">
     <div class="button-group">
-      <button class="common-btn" @click="start">渲染</button>
-      <button class="common-btn" @click="onClear">清除</button>
+        <button class="common-btn" @click="start">渲染</button>
+        <button class="common-btn" @click="onClear">清除</button>
     </div>
   </div>
 </template>

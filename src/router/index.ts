@@ -76,6 +76,11 @@ const RootRoute: Array<RouteRecordRaw> = [
     component: () => import("@/components/materialAnimate/Diffuse.vue")
   },
   {
+    path: '/radar',
+    name: "Radar",
+    component: () => import("@/components/materialAnimate/RadarScan.vue")
+  },
+  {
     path: '/colorLayer',
     name: "ColorLayer",
     component: () => import("@/components/materialAnimate/ColorLayer.vue")
@@ -142,6 +147,11 @@ const RootRoute: Array<RouteRecordRaw> = [
     path: '/heatmap',
     name: "Heatmap",
     component: () => import("@/components/analysis/HeatMap.vue")
+  },
+  {
+    path: '/visualArea',
+    name: "visualArea",
+    component: () => import("@/components/analysis/VisualArea.vue")
   },
   
   //其他地图

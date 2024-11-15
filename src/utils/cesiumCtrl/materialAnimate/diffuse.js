@@ -123,6 +123,7 @@ export default class CircleDiffusion {
     this.viewer.scene.postProcessStages.add(ScanPostStage);
     return ScanPostStage;
   };
+
   /**
    * 扩散效果Shader
    */
@@ -163,9 +164,7 @@ export default class CircleDiffusion {
             float dis = length(prjOnPlane.xyz - u_scanCenterEC.xyz);
             if(dis < u_radius){
               float f = 1.0 - abs(u_radius - dis) / u_radius;
-              f = pow(f, float(` +
-      inpram +
-      `));
+              f = pow(f, float(` + inpram + `));
               fragColor = mix(fragColor,u_scanColor,f);
             }
             fragColor.a = fragColor.a / 2.0;

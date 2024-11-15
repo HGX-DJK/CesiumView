@@ -7,8 +7,7 @@
                <span class="name">{{ item.name }}</span>
                <span class="iconfont icon-xiala" :class="{ 'icon-rotate': !item.show }"></span>
             </div>
-            <div class="children-content"
-               :style="{ 'maxHeight': item.show ? computedChildheight(item) + 'rem' : '0rem' }">
+            <div class="children-content" :style="{ 'maxHeight': item.show ? computedChildheight(item) + 'rem' : '0rem' }">
                <div class="child-item" v-for="(ele, i) of item.children" :key="i" @click="operateDifferentFun(ele)"
                   :class="{ 'active': menu.leafActive == ele.name }">
                   <span>{{ ele.name }}</span>

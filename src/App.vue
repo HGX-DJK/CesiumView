@@ -1,30 +1,28 @@
 <template>
   <n-config-provider :locale="zhCN" :date-locale="dateZhCN">
     <sl-app-provider>
-      <!--左侧菜单栏-->
-      <sl-left-content class="left"></sl-left-content>
-      <!--地图展示-->
-      <sl-map class="map"></sl-map>
-      <router-view class="router-content"></router-view>
+        <!--左侧菜单栏-->
+        <sl-left-content class="left"></sl-left-content>
+        <!--地图展示-->
+        <sl-map class="map"></sl-map>
+        <router-view class="router-content"></router-view>
     </sl-app-provider>
   </n-config-provider>
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { zhCN, dateZhCN } from 'naive-ui';
 import { useRouter } from "vue-router";
-let router = useRouter();
 import slAppProvider from "@/components/common/AppProvider.vue";
-//左侧数据
-import slLeftContent from "@/views/LeftContent.vue";
-//地图展示
-import slMap from "@/components/Map.vue";
-import { onMounted } from 'vue';
+import slLeftContent from "@/views/LeftContent.vue";  //左侧数据
+import slMap from "@/components/Map.vue";  //地图展示
 
-
+let router = useRouter();
 onMounted(() => {
-  router.push("/")
-})
+    router.push("/");
+});
+
 </script>
 
 <style scoped lang="scss">
@@ -51,4 +49,5 @@ onMounted(() => {
   left: 20rem;
   top: 2rem;
 }
+
 </style>

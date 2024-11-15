@@ -72,6 +72,10 @@ export const MenuStore = defineStore("menu", {
                             path: "/diffuse",
                         },
                         {
+                            name: "雷达扫描",
+                            path: "/radar",
+                        },
+                        {
                             name: "四色图",
                             path: "/colorLayer",
                         },
@@ -142,6 +146,10 @@ export const MenuStore = defineStore("menu", {
                         {
                             name: "热力图",
                             path:"heatmap"
+                        },
+                        {
+                            name: "可视域分析",
+                            path:"visualArea"
                         },
                     ]
                 },
