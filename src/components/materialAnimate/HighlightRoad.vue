@@ -31,19 +31,18 @@ viewer.camera.setView({
 const onStart = () => {
     _dataSource = new Cesium.GeoJsonDataSource();
     _dataSource.load(jsonUrl).then(function (dataSource) {
-      const entities = dataSource.entities.values;
-      // 聚焦
-      // viewer.zoomTo(entities);
-      for (let i = 0; i < entities.length; i++) {
-          let entity = entities[i];
-          entity.polyline.width = 3.0;
-          //设置道路线条实体的材质
-          entity.polyline.material = new LineFlickerMaterialProperty({
-              color: Cesium.Color.YELLOW,
-              // 设置随机变化速度
-              speed: 20 * Math.random(),
-          });
-      };
+        const entities = dataSource.entities.values;
+        // viewer.zoomTo(entities);
+        for (let i = 0; i < entities.length; i++) {
+            let entity = entities[i];
+            entity.polyline.width = 3.0;
+            //设置道路线条实体的材质
+            entity.polyline.material = new LineFlickerMaterialProperty({
+                color: Cesium.Color.YELLOW,
+                // 设置随机变化速度
+                speed: 20 * Math.random(),
+            });
+        };
     });
     viewer.dataSources.add(_dataSource);
 };

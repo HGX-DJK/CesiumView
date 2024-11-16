@@ -1,13 +1,19 @@
 <!--矩形雷达扫描-->
 <template>
-  <canvas id="canvas-a" class="canvas" width="300" height="300"></canvas>
+    <div class="container">
+        <div class="button-group">
+          <button class="common-btn" @click="startRadarScan">开始</button>
+          <button class="common-btn" @click="onClear">清除</button>
+        </div>
+        <!---canvas绘制雷达扫描-->
+        <canvas id="canvas-a" class="canvas" width="300" height="300"></canvas>
+    </div>
 </template>
 
 <script setup>
-import { getCurrentInstance, onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import { ViewerStore } from "@/store";
 
-const { proxy } = getCurrentInstance();
 const viewerStore = ViewerStore();
 const viewer = viewerStore.viewer;
 
@@ -15,10 +21,10 @@ const viewer = viewerStore.viewer;
 viewer.camera.setView({
     destination: Cesium.Cartesian3.fromDegrees(121.37, 31.23, 70000)
 });
-//旋转角度
+//雷达扫描旋转角度
 let rotation = Cesium.Math.toRadians(30);
 //开启雷达扫描
-function startRadar() {
+function startRadarScan() {
     viewer.entities.add({
         name: '矩形雷达扫描',
         rectangle: {  
@@ -42,10 +48,12 @@ function getRotationValue() {
     rotation -= 0.02;
     return rotation;
 };
+
 //获取绘制的canvas画布
 function drawCanvas() {
     let canvas = document.getElementById("canvas-a");
     let context = canvas.getContext('2d');
+    //创建一个线性渐变对象，参数(175,100,canvas.width,150)分别表示渐变的起点和结束点坐标
     let grd = context.createLinearGradient(175, 100, canvas.width, 150);
     grd.addColorStop(0, "rgba(0,255,0,0)");
     grd.addColorStop(1, "rgba(0,255,0,1)");
@@ -58,14 +66,14 @@ function drawCanvas() {
 };
 
 //清除雷达扫描
-const onClear = () => { };
+const onClear = () => { 
+  //可以清除所有的实体
+  viewer.entities.removeAll();
+};
 
 onMounted(() => {
     //开启深度检测
     viewer.scene.globe.depthTestAgainstTerrain = true;
-    proxy.$nextTick(()=>{
-        startRadar();
-    });
 })
 
 onUnmounted(() => {
