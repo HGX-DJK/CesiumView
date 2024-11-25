@@ -144,12 +144,16 @@ export const MenuStore = defineStore("menu", {
                             path:"elevation"
                         }, 
                         {
-                            name: "热力图",
+                            name: "热力分析",
                             path:"heatmap"
                         },
                         {
                             name: "可视域分析",
                             path:"visualArea"
+                        },
+                        {
+                            name: "地形开挖",
+                            path:"excavateTerrain"
                         },
                     ]
                 },

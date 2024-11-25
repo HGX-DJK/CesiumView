@@ -14,7 +14,7 @@ import { ViewerStore } from "@/store";
 const viewerStore = ViewerStore();
 const viewer = viewerStore.viewer;
 
-let viewshedValue = ""
+let viewshedValue = "";
 //开始可视分析
 function addVisualAnalysis(){
   var viewsheds = [];
@@ -96,24 +96,11 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  clearMaterial();
   viewer.scene.terrainProvider = new Cesium.EllipsoidTerrainProvider({});
 });
 
 </script>
 
 <style scoped lang="scss">
-input {
-  margin-left: 2rem;
-  text-align: left;
-}
 
-input:focus {
-  outline: none;
-}
-
-.input-check {
-  position: relative;
-  left: -7rem;
-}
 </style>

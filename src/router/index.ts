@@ -153,7 +153,11 @@ const RootRoute: Array<RouteRecordRaw> = [
     name: "visualArea",
     component: () => import("@/components/analysis/VisualArea.vue")
   },
-  
+  {
+    path: '/excavateTerrain',
+    name: "ExcavateTerrain",
+    component: () => import("@/components/analysis/ExcavateTerrain.vue")
+  },
   //其他地图
   {
     path: '/maptalks',
