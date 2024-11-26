@@ -126,6 +126,7 @@ const onDel = () => {
 
 onUnmounted(() => {
   onDel();
+  viewer.scene.primitives.removeAll();
 });
 </script>
 

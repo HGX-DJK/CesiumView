@@ -23,7 +23,7 @@ const openSkylineAnay = async () => {
 
 //关闭天际线分析
 const closeSkylineAnay = () => {
-  skyLineIns.close();
+   skyLineIns && skyLineIns.close();
 };
 
 //设置场景中相机的视角
@@ -50,9 +50,11 @@ const setCameraViewer = ()=>{
 onMounted(async () => {
   setCameraViewer();
 });
+
 onUnmounted(() => {
   closeSkylineAnay();
 });
+
 </script>
 
 <style scoped lang="scss"></style>

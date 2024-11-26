@@ -136,6 +136,11 @@ export const MenuStore = defineStore("menu", {
                             path:"waterFlood"
                         },
                         {
+                            name: "淹没设置",
+                            path:"waterFlood1",
+                            newFlag:true
+                        },
+                        {
                             name: "天际线分析",
                              path:"skyline"
                         },

@@ -8,9 +8,9 @@
                <span class="iconfont icon-xiala" :class="{ 'icon-rotate': !item.show }"></span>
             </div>
             <div class="children-content" :style="{ 'maxHeight': item.show ? computedChildheight(item) + 'rem' : '0rem' }">
-               <div class="child-item" v-for="(ele, i) of item.children" :key="i" @click="operateDifferentFun(ele)"
-                  :class="{ 'active': menu.leafActive == ele.name }">
-                  <span>{{ ele.name }}</span>
+               <div class="child-item" v-for="(ele, i) of item.children" :key="i" @click="operateDifferentFun(ele)" :class="[{ 'active': menu.leafActive == ele.name },{'special':ele.newFlag}]">
+                  <span v-show="ele.newFlag" class="new-tag">新</span>
+                  <span class="name">{{ ele.name }}</span>
                </div>
             </div>
          </div>
@@ -100,13 +100,26 @@ function operateDifferentFun(item: { [key: string]: any }) {
       align-items: center;
       height: 4rem;
       padding: 2.5rem 0rem;
-      padding-left: 2.5rem;
+      padding-left: 3rem;
       text-align: center;
       font-size: 1.5rem;
       box-shadow: 0 -1px 1px rgba(0, 0, 0, 0.2);  
+      .new-tag{
+         color:#ff0000;
+         position: relative;
+         top: -1rem;
+         transform: rotateZ(-10deg);
+         font-size: 1.4rem;
+         margin-right: 0.4rem;
+         left: -2rem;
+      }
       &.active {
          color: $yellow
       }
+   }
+   .special .name{
+      position: relative;
+      left: -2rem;
    }
    .child-item:hover {
       background: rgb(57, 66, 75);

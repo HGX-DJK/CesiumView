@@ -134,6 +134,11 @@ const RootRoute: Array<RouteRecordRaw> = [
     component: () => import("@/components/analysis/WaterFlood.vue")
   },
   {
+    path: '/waterFlood1',
+    name: "WaterFlood1",
+    component: () => import("@/components/analysis/WaterFloodNew.vue")
+  },
+  {
     path: '/skyline',
     name: "Skyline",
     component: () => import("@/components/analysis/SkyLine.vue")
