@@ -31,6 +31,7 @@ function removeVisualLayer(){
   if(viewshedValue){
      viewshedValue.clear();
   };
+  viewer.scene.primitives.removeAll();
 }
 
 //添加三位模型
@@ -97,6 +98,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   viewer.scene.terrainProvider = new Cesium.EllipsoidTerrainProvider({});
+  removeVisualLayer();
 });
 
 </script>

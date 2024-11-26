@@ -11,7 +11,6 @@ import { onUnmounted }   from "vue";
 import { ViewerStore }   from "@/store";
 import { getGeojson }    from "@/api/api.js";
 import { CesiumHeatmap } from "@/utils/cesiumCtrl/analysis/cesiumHeatMap.js";
-// import { CesiumHeatmap } from "cesium-heatmap-es6";
 
 const viewerStore = ViewerStore();
 const viewer = viewerStore.viewer;

@@ -10,6 +10,7 @@ const viewerStore = ViewerStore();
 const viewer = viewerStore.viewer;
 const baseUrl  = window._config.VITE_BASE_URL ;
 
+//异步加载地形数据
 const addWorldTerrainAsync = async () => {
   try {
     const terrainProvider = await Cesium.createWorldTerrainAsync({
@@ -19,19 +20,18 @@ const addWorldTerrainAsync = async () => {
     viewer.terrainProvider = terrainProvider;
   } catch (error) {
     console.log(`Failed to add world imagery: ${error}`);
-  }
+  };
 };
+
 //地形开挖
 function startExcavate(){
       // 开启帧率
       viewer.scene.debugShowFramesPerSecond = true;
       // 深度监测
       viewer.scene.globe.depthTestAgainstTerrain = true;
-
       viewer.camera.setView({
-          destination: new Cesium.Cartesian3(-2409728.6420393116, 4694838.793290997, 3570221.295666795)
+          destination: new Cesium.Cartesian3(-2409813.389689466, 4694859.279606352, 3570137.7191554685)
       });
-
       var mr = [{
           x: -2409728.6420393116,
           y: 4694838.793290997,
@@ -53,7 +53,6 @@ function startExcavate(){
           z: 3570140.4776008143
       }
       ];
-
       new excavateTerrain(viewer, {
           positions: mr,
           height: 30,
@@ -66,7 +65,7 @@ function startExcavate(){
 onMounted(() => {
     // 加载默认地形
     addWorldTerrainAsync();
-    startExcavate()
+    startExcavate();
 });
 
 onUnmounted(() => {

@@ -20,6 +20,7 @@ const openSkylineAnay = async () => {
     // await sleep(3000);
     skyLineIns.open();
 };
+
 //关闭天际线分析
 const closeSkylineAnay = () => {
   skyLineIns.close();

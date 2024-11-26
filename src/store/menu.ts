@@ -139,10 +139,10 @@ export const MenuStore = defineStore("menu", {
                             name: "天际线分析",
                              path:"skyline"
                         },
-                        {
-                            name: "限高分析",
-                            path:"elevation"
-                        }, 
+                        // {
+                        //     name: "限高分析",
+                        //     path:"elevation"
+                        // }, 
                         {
                             name: "热力分析",
                             path:"heatmap"
