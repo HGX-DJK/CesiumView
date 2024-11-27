@@ -160,6 +160,10 @@ export const MenuStore = defineStore("menu", {
                             name: "地形开挖",
                             path:"excavateTerrain"
                         },
+                        {
+                            name: "缓冲分析",
+                            path:"bufferAnalysis"
+                        }
                     ]
                 },
                 {

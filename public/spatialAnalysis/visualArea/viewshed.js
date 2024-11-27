@@ -1,8 +1,5 @@
 /**
  * 可视域分析。
- *
- * @author Helsing
- * @date 2020/08/28
  * @alias viewshed
  * @class
  * @param {Cesium.Viewer} viewer Cesium三维视窗。

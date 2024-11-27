@@ -19,7 +19,7 @@ class SubmergenceAnalysis {
         if (this.viewer) {
             this.createEntity();
             this.updatePoly(this.adapCoordi);
-        }
+        };
     }
     //创建淹没实体
     createEntity() {
@@ -27,7 +27,7 @@ class SubmergenceAnalysis {
             for (let entity of this.polygonEntity) {
                 this.viewer.entities.remove(entity)
             }
-        }
+        };
         this.polygonEntity = [];
         let nEntity = this.viewer.entities.add({
             polygon: {
@@ -35,7 +35,8 @@ class SubmergenceAnalysis {
                 material: this.color,
                 // perPositionHeight: true
             }
-        })
+        });
+        //当this.waterHeight变化的时候nEntity.polygon.extrudHeight也会动态变化
         nEntity.polygon.extrudedHeight = new Cesium.CallbackProperty(() => this.waterHeight, false)
         this.polygonEntity.push(nEntity);
     }
@@ -46,7 +47,7 @@ class SubmergenceAnalysis {
             this.polygonEntity[0].polygon.hierarchy = new Cesium.PolygonHierarchy(
                 this.adapCoordi // Cesium.Cartesian3.fromDegreesArray(this.adapCoordi)
             );
-        }
+        };
     }
     //坐标转换
     coordsTransformation(coords) {
@@ -81,20 +82,22 @@ class SubmergenceAnalysis {
         this.timer = window.setInterval(() => {
             var sp = this.speed / 50;
             if (this.changetype == "up") {
+                //水位上升
                 this.waterHeight = util.floatObj.add(this.waterHeight, sp);
                 if (this.waterHeight > this.targetHeight) {
                     this.waterHeight = this.targetHeight; //给个最大值
                     window.clearInterval(this.timer);
                     this.endCallback();
-                }
+                };
             } else {
+                //水位下降
                 this.waterHeight -= sp;
                 if (this.waterHeight < this.targetHeight) {
-                    this.waterHeight = this.targetHeight; //给个最大值
+                    this.waterHeight = this.targetHeight; //给个最小值
                     window.clearInterval(this.timer);
                     this.endCallback();
-                }
-            }
+                };
+            };
             this.speedCallback(this.waterHeight);
         }, 20)
     }

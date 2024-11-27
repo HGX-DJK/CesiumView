@@ -7,6 +7,7 @@
   </div>
 </template>
 <script setup>
+
 import { onUnmounted }   from "vue";
 import { ViewerStore }   from "@/store";
 import { getGeojson }    from "@/api/api.js";
@@ -29,7 +30,7 @@ const getData = async () => {
               value: item.properties.num,
             };
         });
-    }
+    };
     cesiumHeatMap = new CesiumHeatmap(viewer, {
         zoomToLayer: true,
         points: heatData,
@@ -43,10 +44,10 @@ const getData = async () => {
 
 //清除渲染的热力图
 const onClear = () => {
-  cesiumHeatMap?.remove();
+  cesiumHeatMap && cesiumHeatMap.remove();
 };
 onUnmounted(() => {
-  onClear();
+    onClear();
 });
 </script>
 

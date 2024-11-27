@@ -150,7 +150,6 @@ util.terrainPolyline = function (params) {
         granularity: params.granularity || 0.00001
     });
 
-
     var cartographicArray = [];
     var ellipsoid = viewer.scene.globe.ellipsoid;
     for (var i = 0; i < flatPositions.length; i += 3) {

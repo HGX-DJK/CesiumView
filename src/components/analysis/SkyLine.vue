@@ -30,11 +30,7 @@ const closeSkylineAnay = () => {
 const setCameraViewer = ()=>{
     viewer.camera.flyTo({
       // 从以度为单位的经度和纬度值返回笛卡尔3位置。
-      destination: Cesium.Cartesian3.fromDegrees(
-        120.58193064609729,
-        36.125460378632766,
-        200
-      ),
+      destination: Cesium.Cartesian3.fromDegrees(120.58193064609729, 36.125460378632766, 200 ),
       orientation: {
           // heading：默认方向为正北，正角度为向东旋转，即水平旋转，也叫偏航角。
           // pitch：默认角度为-90，即朝向地面，正角度在平面之上，负角度为平面下，即上下旋转，也叫俯仰角。

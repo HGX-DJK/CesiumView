@@ -163,6 +163,11 @@ const RootRoute: Array<RouteRecordRaw> = [
     name: "ExcavateTerrain",
     component: () => import("@/components/analysis/ExcavateTerrain.vue")
   },
+  {
+    path: '/bufferAnalysis',
+    name: "BufferAnalysis",
+    component: () => import("@/components/analysis/BufferAnalysis.vue")
+  },
   //其他地图
   {
     path: '/maptalks',

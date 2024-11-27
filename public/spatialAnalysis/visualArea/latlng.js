@@ -7,7 +7,6 @@ var latlng = {};
  */
 latlng.getCurrentMousePosition = function (scene, position, noPickEntity) {
     var cartesian;
-
     //在模型上提取坐标  
     var pickedObject = scene.pick(position);
     if (scene.pickPositionSupported && Cesium.defined(pickedObject)) { //pickPositionSupported :判断是否支持深度拾取,不支持时无法进行鼠标交互绘制
@@ -152,20 +151,17 @@ latlng.getExtent = function (viewer) {
         var temp = extent.xmax;
         extent.xmax = extent.xmin;
         extent.xmin = temp;
-    }
+    };
     if (extent.ymax < extent.ymin) {
         var temp = extent.ymax;
         extent.ymax = extent.ymin;
         extent.ymin = temp;
-    }
-
-
+    };
     return extent;
 }
 /**
  * 提取视域边界
  * @param {Cesium.Viewer} viewer 
- * 
  * */
 latlng.getViewBounds = function (viewer) {
     var rectangle = viewer.camera.computeViewRectangle();
@@ -184,7 +180,7 @@ latlng.getViewBounds = function (viewer) {
             lng: east,
             lat: north
         }
-    }
+    };
     return bounds;
 }
 
@@ -227,9 +223,8 @@ latlng.Cartesian3To = function (cartesian3, viewer) {
     if (cartesian3) {
         if (viewer) {
             var ellipsoid = viewer.scene.globe.ellipsoid;
-            var cartographic;
             //转弧度
-            cartographic = ellipsoid.cartesianToCartographic(cartesian3);
+            var cartographic = ellipsoid.cartesianToCartographic(cartesian3);
         } else {
             cartographic = Cesium.Cartographic.fromCartesian(cartesian3);
         }

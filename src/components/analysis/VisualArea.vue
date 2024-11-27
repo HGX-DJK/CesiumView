@@ -82,11 +82,11 @@ async function set3Dtitle() {
   // 非异步加载
   viewer.scene.primitives.add(tileset);
   viewer.flyTo(tileset, {
-    offset: {
-      heading: Cesium.Math.toRadians(120.0),//方向
-      pitch: Cesium.Math.toRadians(-10),//倾斜角度
-      range: 450
-    }
+      offset: {
+          heading: Cesium.Math.toRadians(120.0),//方向
+          pitch: Cesium.Math.toRadians(-10),//倾斜角度
+          range: 450
+      }
   });
 };
 

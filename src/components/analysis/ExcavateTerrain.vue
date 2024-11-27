@@ -1,5 +1,4 @@
 <template>
-
 </template>
 
 <script setup>
@@ -60,7 +59,6 @@ function startExcavate(){
           side: baseUrl + "images/excavate/excavationregion_top.jpg",
       })
 }
-
 
 onMounted(() => {
     // 加载默认地形
