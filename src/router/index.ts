@@ -190,15 +190,22 @@ const RootRoute: Array<RouteRecordRaw> = [
     component: () => import("@/components/analysis/BufferAnalysis.vue")
   },
 
-    /**
-   * @description 多视图管理
+  /**
+ * @description 多视图管理
+ */
+  {
+    path: '/screenUnion',
+    name: "ScreenUnion",
+    component: () => import("@/components/multiViewManage/ScreenUnion.vue")
+  },
+   /**
+   * @description 空间插值
    */
-    {
-      path: '/screenUnion',
-      name: "ScreenUnion",
-      component: () => import("@/components/multiViewManage/ScreenUnion.vue")
-    },
-
+  {
+    path: '/curveInterpolate',
+    name: "CurveInterpolate",
+    component: () => import("@/components/Interpolation/CurveInterpolate.vue")
+   },
   /**
    * @description 其他地图
    */

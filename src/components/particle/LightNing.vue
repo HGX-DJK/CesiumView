@@ -9,15 +9,15 @@
   
   <script setup>
   import { onMounted, onUnmounted } from "vue";
-  import RainEffect from "@/utils/cesiumCtrl/particle/rain.js";
   import { ViewerStore } from "@/store";
-  
+  import RainEffect from "@/utils/cesiumCtrl/particle/rain.js";
+
   const viewerStore = ViewerStore();
   const viewer = viewerStore.viewer ;
   let  lightning = "";
   const rainInstance = new RainEffect(viewer, {
       tiltAngle: -0.2, //倾斜角度
-      rainSize: 1.0, // 雨大小
+      rainSize: 1.0,   // 雨大小
       rainSpeed: 120.0 // 雨速
   });
   
@@ -78,14 +78,14 @@
         uniform float fall_interval; 
         uniform float mix_factor; 
         in vec2 v_textureCoordinates;
-        out vec4 fragColor; // 使用out替换gl_FragColor
+        out vec4 fragColor; //替换gl_FragColor
         void main(void){
             vec2 uv = gl_FragCoord.xy; 
             float iTime = czm_frameNumber * fall_interval * clamp(fall_interval * 0.1, 0.01, 0.1); 
             vec2 p = uv / czm_viewport.zw; 
             vec2 d; 
             vec2 tgt = vec2(1., -1.); 
-            float c = 0.; 
+            float c = 0.;
             if (p.y >= 0.) 
                c = (1. - (fbm2((p + .2) * p.y + .1 * iTime)).x) * p.y; 
             else                                
@@ -115,8 +115,8 @@
                 name: 'czm_lightning',
                 fragmentShader: Lightning,
                 uniforms: {
-                    mix_factor: val.mix_factor,//混合系数0-1之间的数
-                    fall_interval: 0.8,//0-1之间的数
+                    mix_factor: val.mix_factor, //混合系数0-1之间的数
+                    fall_interval: 0.8,         //0-1之间的数
                 }
             });
         };
@@ -127,15 +127,15 @@
         collection.add(lightning);
   };
 
-
   //删除闪电
   const  removeLightning = ()=>{
-    var collection = viewer.scene.postProcessStages;
-    collection.remove(lightning);
+        var collection = viewer.scene.postProcessStages;
+        collection.remove(lightning);
   };
   
   onUnmounted(() => {
-    rainInstance.destroy()
+    rainInstance.destroy();
+    removeLightning();
   })
   </script>
   

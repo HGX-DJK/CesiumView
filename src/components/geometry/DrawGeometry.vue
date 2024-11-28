@@ -14,7 +14,7 @@ import { ViewerStore } from "@/store";
 import DrawTool from "@/utils/cesiumCtrl/geometry/drawGraphic";
 
 const viewerStore = ViewerStore();
-const viewer = viewerStore.viewer
+const viewer = viewerStore.viewer;
 const drawTool = new DrawTool(viewer);
 
 onUnmounted(() => {

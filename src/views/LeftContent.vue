@@ -9,7 +9,7 @@
             </div>
             <div class="children-content" :style="{ 'maxHeight': item.show ? computedChildheight(item) + 'rem' : '0rem' }">
                <div class="child-item" v-for="(ele, i) of item.children" :key="i" @click="operateDifferentFun(ele)" :class="[{ 'active': menu.leafActive == ele.name },{'special':ele.newFlag}]">
-                  <span v-show="ele.newFlag" class="new-tag">新</span>
+                  <span v-show="ele.newFlag" class="new-tag"><i>新</i></span>
                   <span class="name">{{ ele.name }}</span>
                </div>
             </div>
@@ -105,13 +105,20 @@ function operateDifferentFun(item: { [key: string]: any }) {
       font-size: 1.5rem;
       box-shadow: 0 -1px 1px rgba(0, 0, 0, 0.2);  
       .new-tag{
-         color:#ff0000;
          position: relative;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         width: 1.7rem;
+         height: 1.7rem;
+         background-color: #ff0000;
+         border-radius: 50%;
+         color:#fff;
          top: -1rem;
-         transform: rotateZ(-10deg);
-         font-size: 1.4rem;
-         margin-right: 0.4rem;
          left: -2rem;
+         transform: rotateZ(-10deg);
+         font-size: 1.3rem;
+         margin-right: 0.4rem;
       }
       &.active {
          color: $yellow

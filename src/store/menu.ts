@@ -74,6 +74,7 @@ export const MenuStore = defineStore("menu", {
                         {
                             name: "雷达扫描",
                             path: "/radar",
+                            newFlag:true
                         },
                         {
                             name: "四色图",
@@ -100,6 +101,7 @@ export const MenuStore = defineStore("menu", {
                         {
                             name: "闪电",
                             path: "/lightning",
+                            newFlag:true
                         },
                         {
                             name: "下雪",
@@ -183,6 +185,17 @@ export const MenuStore = defineStore("menu", {
                         {
                             name: "双屏联动",
                             path:"screenUnion"
+                        }
+                    ]
+                },
+                {
+                    name: "空间插值",
+                    show: false,
+                    children: [
+                     
+                        {
+                            name: "曲线插值",
+                            path:"curveInterpolate"
                         }
                     ]
                 },
