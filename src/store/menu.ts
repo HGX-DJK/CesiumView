@@ -130,7 +130,10 @@ export const MenuStore = defineStore("menu", {
                     name: "空间分析",
                     show: false,
                     children: [
-                     
+                        {
+                            name: "日照分析",
+                            path:"sunshineAnalysis"
+                        },
                         {
                             name: "淹没分析",
                             path:"waterFlood"

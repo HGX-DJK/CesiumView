@@ -41,7 +41,7 @@ const props = defineProps({
 })
 
 const closeClick = () => {
-  props?.closeEvent()
+   props?.closeEvent() ;
 };
 
 

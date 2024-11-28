@@ -17,11 +17,12 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
+    "types": ["cypress"],
     "paths": {
       "@/*": ["src/*"],
       "/#/*": ["types/*"]
     },
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "cypress/**/*.ts","node_modules/cypress"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -6,13 +6,14 @@ const RootRoute: Array<RouteRecordRaw> = [
     path: '/',
     redirect: "/index",
   },
-
   {
     path: '/index',
     name: "Index",
     component: () => import("@/views/Index.vue")
   },
-  //几何相关
+  /**
+   * @description 几何相关
+   */
   {
     path: '/entitiesFeature',
     name: "EntitiesFeature",
@@ -33,7 +34,9 @@ const RootRoute: Array<RouteRecordRaw> = [
     name: "Arrow",
     component: () => import("@/components/geometry/Arrow.vue")
   },
-  //图形绘制
+  /**
+   * @description 图形绘制
+   */
   {
     path: '/entity',
     name: "Entity",
@@ -54,7 +57,9 @@ const RootRoute: Array<RouteRecordRaw> = [
     name: "DataSource",
     component: () => import("@/components/drawGraphic/DataSource.vue")
   },
-  //材质动画
+  /**
+   * @description 材质动画
+   */
   {
     path: '/highlightRoad',
     name: "HighlightRoad",
@@ -95,7 +100,9 @@ const RootRoute: Array<RouteRecordRaw> = [
     name: "Skybox",
     component: () => import("@/components/materialAnimate/Skybox.vue")
   },
-  //例子效果
+  /**
+   * @description 粒子效果
+   */
   {
     path: '/rain',
     name: "Rain",
@@ -116,7 +123,9 @@ const RootRoute: Array<RouteRecordRaw> = [
     name: "Fire",
     component: () => import("@/components/particle/Fire.vue")
   },
-  //服务加载
+  /**
+   * @description 服务加载
+   */
   {
     path: '/xyzRender',
     name: "XyzRender",
@@ -127,7 +136,14 @@ const RootRoute: Array<RouteRecordRaw> = [
     name: "3dtilesRender",
     component: () => import("@/components/renderService/3dtiles.vue")
   },
-  //空间分析
+  /**
+   * @description 空间分析
+   */
+  {
+    path: '/sunshineAnalysis',
+    name: "SunshineAnalysis",
+    component: () => import("@/components/analysis/SunshineAnalysis.vue")
+  },
   {
     path: '/waterFlood',
     name: "WaterFlood",
@@ -168,14 +184,14 @@ const RootRoute: Array<RouteRecordRaw> = [
     name: "BufferAnalysis",
     component: () => import("@/components/analysis/BufferAnalysis.vue")
   },
-  //其他地图
+  /**
+   * @description 其他地图
+   */
   {
     path: '/maptalks',
     name: "maptalks",
     component: () => import("@/components/otherMap/Maptalks.vue")
   },
-  
-
 ]
 
 const router = createRouter({
