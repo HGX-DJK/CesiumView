@@ -51,9 +51,9 @@ export default defineConfig({
   component: {
     devServer: {
       framework: "vue",
-      bundler: "vite",
-    },
-  },
+      bundler: "vite"
+    }
+  }
 });
 ```
 
@@ -69,8 +69,10 @@ export default defineConfig({
 **步骤**
 
 - 可以运行npx cypress info 来查看可识别到的本地安装的浏览器
+
   > 因为cypress默认在C:/Program Files (x86)/Google/Chrome/Application/chrome.exe路径下找chrome，而我本机chrome不是在这个路径
 - 创建链接，使用管理员身份打开cmd 执行命令
+  
 - mkdir "C:\Program Files (x86)\Google\Chrome\Application"
 - 然后再执行 mklink "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" source_file，source_file是本机chrome的安装目录
 

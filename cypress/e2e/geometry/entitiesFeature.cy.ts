@@ -39,7 +39,7 @@ describe("点击左侧面板", () => {
             // 测试 "添加线段" 按钮
             cy.contains('button', '添加线段').click();
 
-            cy.wait(500);
+            cy.wait(1000);
         
             // 测试 "线段体积(圆形)" 按钮
             cy.contains('button', '线段体积(圆形)').click();

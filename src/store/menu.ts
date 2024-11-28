@@ -98,6 +98,10 @@ export const MenuStore = defineStore("menu", {
                             path: "/rain",
                         },
                         {
+                            name: "闪电",
+                            path: "/lightning",
+                        },
+                        {
                             name: "下雪",
                             path: "/snow",
                         },
@@ -132,7 +136,8 @@ export const MenuStore = defineStore("menu", {
                     children: [
                         {
                             name: "日照分析",
-                            path:"sunshineAnalysis"
+                            path:"sunshineAnalysis",
+                            newFlag:true
                         },
                         {
                             name: "淹没分析",
@@ -157,7 +162,8 @@ export const MenuStore = defineStore("menu", {
                         },
                         {
                             name: "可视域分析",
-                            path:"visualArea"
+                            path:"visualArea",
+                            newFlag:true
                         },
                         {
                             name: "地形开挖",
@@ -166,6 +172,17 @@ export const MenuStore = defineStore("menu", {
                         {
                             name: "缓冲分析",
                             path:"bufferAnalysis"
+                        }
+                    ]
+                },
+                {
+                    name: "多视图管理",
+                    show: false,
+                    children: [
+                     
+                        {
+                            name: "双屏联动",
+                            path:"screenUnion"
                         }
                     ]
                 },

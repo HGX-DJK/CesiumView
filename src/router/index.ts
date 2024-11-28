@@ -109,6 +109,11 @@ const RootRoute: Array<RouteRecordRaw> = [
     component: () => import("@/components/particle/Rain.vue")
   },
   {
+    path: '/lightning',
+    name: "Lightning",
+    component: () => import("@/components/particle/Lightning.vue")
+  },
+  {
     path: '/snow',
     name: "Snow",
     component: () => import("@/components/particle/Snow.vue")
@@ -184,6 +189,16 @@ const RootRoute: Array<RouteRecordRaw> = [
     name: "BufferAnalysis",
     component: () => import("@/components/analysis/BufferAnalysis.vue")
   },
+
+    /**
+   * @description 多视图管理
+   */
+    {
+      path: '/screenUnion',
+      name: "ScreenUnion",
+      component: () => import("@/components/multiViewManage/ScreenUnion.vue")
+    },
+
   /**
    * @description 其他地图
    */
