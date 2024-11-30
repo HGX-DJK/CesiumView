@@ -1,24 +1,23 @@
 <template>
   <div class="container">
     <div class="button-group">
-      <button class="common-btn" @click="addPolylineGraphics">添加线段</button>
-      <button class="common-btn" @click="addPolylineVolumes('ROUNDED', 'RED')">线段体积(圆形)</button>
-      <button class="common-btn" @click="addPolylineVolumes('MITERED', 'BLUE')">线段体积(直角)</button>
-      <button class="common-btn" @click="addPolylineVolumes('BEVELED')">线段体积(切角)</button>
-      <button class="common-btn" @click="addRectangle">添加矩形</button>
-      <button class="common-btn" @click="addSpheres">添加球体</button>
-      <button class="common-btn" @click="addWall">添加墙</button>
+        <button class="common-btn" @click="addPolylineGraphics">添加线段</button>
+        <button class="common-btn" @click="addPolylineVolumes('ROUNDED', 'RED')">线段体积(圆形)</button>
+        <button class="common-btn" @click="addPolylineVolumes('MITERED', 'BLUE')">线段体积(直角)</button>
+        <button class="common-btn" @click="addPolylineVolumes('BEVELED')">线段体积(切角)</button>
+        <button class="common-btn" @click="addRectangle">添加矩形</button>
+        <button class="common-btn" @click="addSpheres">添加球体</button>
+        <button class="common-btn" @click="addWall">添加墙</button>
     </div>
-
     <div class="button-group" style="margin-top: 10px;">
-      <button class="common-btn" @click="addPolygon">添加多边形面</button>
-      <button class="common-btn" @click="addBox">添加盒子模型</button>
-      <button class="common-btn" @click="addEllipseGraphics">添加椭圆形</button>
-      <button class="common-btn" @click="addCorridorGraphics">添加走廊</button>
-      <button class="common-btn" @click="addCylinderGraphics">添加圆柱</button>
+        <button class="common-btn" @click="addPolygon">添加多边形面</button>
+        <button class="common-btn" @click="addBox">添加盒子模型</button>
+        <button class="common-btn" @click="addEllipseGraphics">添加椭圆形</button>
+        <button class="common-btn" @click="addCorridorGraphics">添加走廊</button>
+        <button class="common-btn" @click="addCylinderGraphics">添加圆柱</button>
     </div>
     <div style="margin-top: 10px;">
-      <button class="common-btn" @click="clear">清除</button>
+        <button class="common-btn" @click="clear">清除</button>
     </div>
   </div>
 </template>
@@ -48,16 +47,16 @@ const addPolygon = () => {
   //   }
   // })
   const entities1 = viewer.entities.add({
-    polygon: {
-      hierarchy: Cesium.Cartesian3.fromDegreesArray([
-        -109.080842, 45.002073, -104.058488, 45.002073,
-        -104.053011, 41.003906, -105.728954, 41.003906,
-      ]),
-      height: 5000,
-      material: Cesium.Color.BLUE.withAlpha(0.5),
-      outline: true,
-      outlineColor: Cesium.Color.BLACK,
-    }
+      polygon: {
+          hierarchy: Cesium.Cartesian3.fromDegreesArray([
+            -109.080842, 45.002073, -104.058488, 45.002073,
+            -104.053011, 41.003906, -105.728954, 41.003906,
+          ]),
+          height: 5000,
+          material: Cesium.Color.BLUE.withAlpha(0.5),
+          outline: true,
+          outlineColor: Cesium.Color.BLACK,
+      }
   });
   viewer.zoomTo(entities1);
 }

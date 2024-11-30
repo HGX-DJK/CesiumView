@@ -34,7 +34,6 @@ onMounted(() => {
   // viewer.scene.terrainProvider = new Cesium.CesiumTerrainProvider({
   //   url: "http://data.marsgis.cn/terrain",
   // });
-
   Arrow.disable();
   Arrow.init(viewer);
 });

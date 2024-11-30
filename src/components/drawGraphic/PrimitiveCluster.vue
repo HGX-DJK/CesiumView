@@ -79,8 +79,6 @@ const formatClusterPoint = (features) => {
     //图元聚类事件监听
     primitivecluster.clusterEvent.addEventListener(
         (clusteredEntities, cluster) => {
-            // console.log("clusteredEntities", clusteredEntities);
-            // console.log("cluster", cluster);
             // 关闭自带的显示聚合数量的标签
             cluster.label.show = false;
             cluster.billboard.show = true;

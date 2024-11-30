@@ -88,7 +88,7 @@ function addCurveLine(){
 function flyTo(){
     viewer.camera.flyTo({
       // 从以度为单位的经度和纬度值返回笛卡尔3位置。
-      destination:   Cesium.Cartesian3.fromDegrees(110,10,900000),
+      destination: Cesium.Cartesian3.fromDegrees(110,10,900000),
       duration: 3, // 飞行时间（s）
     });
 }

@@ -18,7 +18,6 @@ let pointFeatures = [];
 // 先获取点位的json信息
 const getJson = () => {
     getGeojson("/data/json/chuzhong.geojson").then(({ res }) => {
-        console.log(res);
         const { features } = res;
         pointFeatures = features;
         formatData(features);
@@ -27,7 +26,6 @@ const getJson = () => {
 const formatData = (features) => {
     for (let i = 0; i < features.length; i++) {
         const feature = features[i];
-        debugger
         // 每个点位的坐标
         const coordinates = feature.geometry.coordinates;
         // 将坐标处理成3D笛卡尔点
@@ -36,7 +34,6 @@ const formatData = (features) => {
             coordinates[1],
             2
         );
-    
         viewer.entities.add({
             position: position,
             billboard: {
@@ -50,13 +47,10 @@ const formatData = (features) => {
                 width: 50,
                 // 大小是否以米为单位
                 sizeInMeters: false,
-
                 // 应用于图像的统一比例。比例大于会1.0放大标签，而比例小于会1.0缩小标签。
                 scale: 1.0,
-
                 // 是否显示
                 show: true,
-
                 //禁用深度检测,防止深度检测造成遮挡
                 disableDepthTestDistance: Number.POSITIVE_INFINITY,  
                 // 逆时针旋转

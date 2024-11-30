@@ -9,9 +9,9 @@
 
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted }   from "vue";
 import { ViewerStore } from "@/store";
-import { getGeojson } from "@/api/api.js";
+import { getGeojson }  from "@/api/api.js";
 import Dialog from "@/utils/cesiumCtrl/dialog";
 
 const viewerStore = ViewerStore();
@@ -90,7 +90,6 @@ function addClickeEvent() {
     // ScreenSpaceEventHandler的参数是要添加事件的元素，直接给整个画布添加
     const handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
     handler.setInputAction((e) => {
-        console.log("xxxx", e);
         // 获取点击的实体
         const pick = scene.pick(e.position);
         // 判断点击的是不是点位

@@ -21,7 +21,11 @@ function initMap() {
         zoom: 14,
         minZoom: 4,
         maxZoom: 18,
-        zoomControl: true,
+        zoomControl: {
+          position: "top-left",
+          slider: true,
+          zoomLevel: true,
+        },
     });
 }
 //加载地图瓦片

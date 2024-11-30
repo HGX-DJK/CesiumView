@@ -139,7 +139,6 @@ handler.setInputAction((e) => {
     const pick = scene.pick(e.position);
     if (Cesium.defined(pick) && pick.id.indexOf("polygon") > -1) {
         const id = pick.id.replace(/polygon-/g, "");
-        console.log("xxx", pick.id, pick);
         // 单击变色(TODO:遇到多个相同id的instance会失效)
         // const attributes = pick.primitive.getGeometryInstanceAttributes(pick.id)
         // console.log("----attributes---", attributes)
