@@ -102,6 +102,7 @@ onMounted(()=>{
 });
 onUnmounted(()=>{
     viewer.scene.globe.depthTestAgainstTerrain = true;
+    viewer.entities.removeAll();
 })
 </script>
 
