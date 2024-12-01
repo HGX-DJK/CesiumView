@@ -25,7 +25,8 @@ export const MenuStore = defineStore("menu", {
                         },
                         {
                             name: "态势图",
-                            path: "/arrow"
+                            path: "/arrow",
+                            newFlag:true
                         },
                     ]
                 },
@@ -43,7 +44,8 @@ export const MenuStore = defineStore("menu", {
                         },
                         {
                             name: "图元聚合",
-                            path: "/primitiveCluster"
+                            path: "/primitiveCluster",
+                            newFlag:true
                         },
                         {
                             name: "数据源",
@@ -79,6 +81,7 @@ export const MenuStore = defineStore("menu", {
                         {
                             name: "四色图",
                             path: "/colorLayer",
+                            newFlag:true
                         },
                         {
                             name: "流动水面",
@@ -196,6 +199,17 @@ export const MenuStore = defineStore("menu", {
                         {
                             name: "曲线插值",
                             path:"curveInterpolate"
+                        }
+                    ]
+                },
+                {
+                    name: "气泡弹窗",
+                    show: false,
+                    children: [
+                     
+                        {
+                            name: "点位弹窗",
+                            path:"popup"
                         }
                     ]
                 },

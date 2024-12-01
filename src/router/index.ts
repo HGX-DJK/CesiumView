@@ -206,6 +206,15 @@ const RootRoute: Array<RouteRecordRaw> = [
     name: "CurveInterpolate",
     component: () => import("@/components/Interpolation/CurveInterpolate.vue")
    },
+
+   /**
+   * @description 气泡弹窗
+   */
+  {
+    path: '/popup',
+    name: "Popup",
+    component: () => import("@/components/popups/Index.vue")
+   },
   /**
    * @description 其他地图
    */
