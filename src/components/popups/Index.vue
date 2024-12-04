@@ -3,13 +3,13 @@
 
 
 <script setup>
-import { getCurrentInstance, onMounted }   from "vue";
+import { getCurrentInstance, onMounted, onUnmounted }   from "vue";
 import { ViewerStore } from "@/store";
 const { proxy }  = getCurrentInstance();
 const viewerStore = ViewerStore();
 const viewer = viewerStore.viewer
 
-let currentEntity = null
+let currentEntity = null , listArray = [];
 //添加气泡弹窗
 function addEntityPopup(){
     currentEntity = viewer.entities.add({
@@ -62,6 +62,7 @@ function addEntityPopup(){
             },
             isclose: false
         });
+        listArray.push(popup2);
 };
 
 function addDomModel(coordinate = [121.47,31.23]){
@@ -83,6 +84,7 @@ function addDomModel(coordinate = [121.47,31.23]){
         },
         isclose: true
     });
+    listArray.push(popup);
 }
 
 //相机视角改变
@@ -101,24 +103,34 @@ function flyTo(){
 //添加点击事件
 function addClickEvent(){
     let handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
-        handler.setInputAction(function (clickEvent) {
-            // 获取被点击的实体
-            // var ray1 = viewer.camera.getPickRay(clickEvent.position);
-            // var cartesian = viewer.scene.globe.pick(ray1, viewer.scene);
-            var pickEd = viewer.scene.pick(clickEvent.position);
-            if (pickEd) {
-                console.log(pickEd)
-            };
-        }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    handler.setInputAction(function (clickEvent) {
+        // 获取被点击的实体
+        // var ray1 = viewer.camera.getPickRay(clickEvent.position);
+        // var cartesian = viewer.scene.globe.pick(ray1, viewer.scene);
+        var pickEd = viewer.scene.pick(clickEvent.position);
+        if (pickEd) {
+            console.log(pickEd)
+        };
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 }
 onMounted(()=>{
     // 开启帧率
     viewer.scene.debugShowFramesPerSecond = true;
     proxy.$nextTick(()=>{
         addEntityPopup();
-        flyTo();
+        flyTo();  
         addClickEvent()
     })
+})
+
+
+onUnmounted(()=>{
+    //删除所有的实体
+    viewer.entities.removeAll();
+    //关闭所有的弹窗
+    listArray.forEach(item=>{
+        item && item.closeAll();
+    });
 })
 
 </script>

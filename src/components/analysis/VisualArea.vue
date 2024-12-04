@@ -41,7 +41,6 @@ async function set3Dtitle() {
   const url = 'http://data.marsgis.cn/3dtiles/qx-shequ/tileset.json';
   let tilesetJson = viewerStore.get3DtilesParam();
   const tileset = await Cesium.Cesium3DTileset.fromUrl(url, tilesetJson);
-  // 非异步加载
   viewer.scene.primitives.add(tileset);
   viewer.flyTo(tileset, {
       offset: {

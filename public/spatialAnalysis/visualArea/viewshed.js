@@ -60,15 +60,15 @@ class viewshed extends analyser {
         var ellipsoid = this.viewer.scene.globe.ellipsoid;
         _self.handler.setInputAction(function (movement) {
             var cartesian = latlng.getCurrentMousePosition(_self.viewer.scene, movement.position);
-
             if (_self._markers.length == 0) {
+                //获取到的是经纬度弧度和高度
 				var temp1 = Cesium.Cartographic.fromCartesian( cartesian );
 				var h1 ;
 				if (_self.options.qdOffset) {
 					h1 = temp1.height + _self.options.qdOffset
 				}else{
 					h1 = temp1.height + 1;
-				}
+				};
 				var cartographictemp = Cesium.Cartographic.fromDegrees( temp1.longitude / Math.PI * 180, temp1.latitude / Math.PI * 180, h1);
 				cartesian = ellipsoid.cartographicToCartesian(cartographictemp);
 			} else if (_self._markers.length == 1) {
@@ -78,15 +78,14 @@ class viewshed extends analyser {
 					h1 = temp1.height + _self.options.qdOffset
 				}else{
 					h1 = temp1.height + 1;
-				}
+				};
 				var cartographictemp = Cesium.Cartographic.fromDegrees( temp1.longitude / Math.PI * 180, temp1.latitude / Math.PI * 180, h1);
 				cartesian = ellipsoid.cartographicToCartesian(cartographictemp);
 			}
 
-
             if (!cartesian) {
                 return;
-            }
+            };
 
             _self.posArray.push(cartesian);
             if (_self._markers.length == 0) {

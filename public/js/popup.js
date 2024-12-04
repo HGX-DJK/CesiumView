@@ -41,7 +41,8 @@ class Popup {
         _this.viewer.clock.onTick.addEventListener(_this.eventListener);
     };
 
-    if (conf.isclose === false) {} else {
+    if (conf.isclose === false) {
+    }else {
       if (ctn.getElementsByClassName("bx-popup-close") && ctn.getElementsByClassName("bx-popup-close").length > 0 ) {
             ctn.getElementsByClassName("bx-popup-close")[0].onclick = function () {
                 _this.close(ctn);
@@ -97,12 +98,13 @@ class Popup {
     if (Object.keys(this.ctnList).length == 0) {
       this.viewer.clock.onTick.removeEventListener(this.eventListener);
       this.eventListener = null;
-    }
+    };
   }
-  closeAll(e) {
+  closeAll() {
     for (var o in this.ctnList) {
-      this.ctnList[o][1].remove();
-    }
+      //移除创建的DOM元素
+      this.ctnList[o][1].remove();  
+    };
     this.ctnList = {};
     this.viewer.clock.onTick.removeEventListener(this.eventListener);
     this.eventListener = null;
