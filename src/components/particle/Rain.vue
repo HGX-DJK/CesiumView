@@ -13,21 +13,27 @@ import RainEffect from "@/utils/cesiumCtrl/particle/rain.js";
 import { ViewerStore } from "@/store";
 
 const viewerStore = ViewerStore();
-const instance = new RainEffect(viewerStore.viewer, {
-    tiltAngle: -0.2, //倾斜角度
-    rainSize: 1.0, // 雨大小
-    rainSpeed: 120.0 // 雨速
-})
-
+let rainInstance = "";
+const addInstance = ()=>{
+  rainInstance = new RainEffect(viewerStore.viewer, {
+      tiltAngle: -0.2, //倾斜角度
+      rainSize: 1.0,   // 雨大小
+      rainSpeed: 120.0 // 雨速
+  });
+}
 const hide = () => {
-  instance.show(false)
+  rainInstance.show(false)
 }
 const start = () => {
-  instance.show(true)
+  rainInstance.show(true)
 }
 
+onMounted(()=>{
+  addInstance();
+})
+
 onUnmounted(() => {
-  instance.destroy()
+  rainInstance.destroy()
 })
 </script>
 

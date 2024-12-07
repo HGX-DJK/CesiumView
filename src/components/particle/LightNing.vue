@@ -14,13 +14,17 @@
 
   const viewerStore = ViewerStore();
   const viewer = viewerStore.viewer ;
-  let  lightning = "";
-  const rainInstance = new RainEffect(viewer, {
-      tiltAngle: -0.2, //倾斜角度
-      rainSize: 1.0,   // 雨大小
-      rainSpeed: 120.0 // 雨速
-  });
-  
+
+  let  lightning = "",rainInstance = "";
+
+  const addInstance = ()=>{
+    rainInstance = new RainEffect(viewer, {
+        tiltAngle: -0.2, //倾斜角度
+        rainSize: 1.0,   // 雨大小
+        rainSpeed: 120.0 // 雨速
+    });
+  }
+
   const hide = () => {
     rainInstance.show(false);
     removeLightning();
@@ -129,9 +133,14 @@
 
   //删除闪电
   const  removeLightning = ()=>{
-        var collection = viewer.scene.postProcessStages;
-        collection.remove(lightning);
+    var collection = viewer.scene.postProcessStages;
+    collection.remove(lightning);
   };
+
+
+  onMounted(()=>{
+    addInstance();
+  })
   
   onUnmounted(() => {
     rainInstance.destroy();

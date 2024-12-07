@@ -60,33 +60,20 @@ class viewshed extends analyser {
         var ellipsoid = this.viewer.scene.globe.ellipsoid;
         _self.handler.setInputAction(function (movement) {
             var cartesian = latlng.getCurrentMousePosition(_self.viewer.scene, movement.position);
-            if (_self._markers.length == 0) {
-                //获取到的是经纬度弧度和高度
-				var temp1 = Cesium.Cartographic.fromCartesian( cartesian );
-				var h1 ;
-				if (_self.options.qdOffset) {
-					h1 = temp1.height + _self.options.qdOffset
-				}else{
-					h1 = temp1.height + 1;
-				};
-				var cartographictemp = Cesium.Cartographic.fromDegrees( temp1.longitude / Math.PI * 180, temp1.latitude / Math.PI * 180, h1);
-				cartesian = ellipsoid.cartographicToCartesian(cartographictemp);
-			} else if (_self._markers.length == 1) {
-				var temp1 = Cesium.Cartographic.fromCartesian( cartesian );
-				var h1 ;
-				if (_self.options.zdOffset) {
-					h1 = temp1.height + _self.options.qdOffset
-				}else{
-					h1 = temp1.height + 1;
-				};
-				var cartographictemp = Cesium.Cartographic.fromDegrees( temp1.longitude / Math.PI * 180, temp1.latitude / Math.PI * 180, h1);
-				cartesian = ellipsoid.cartographicToCartesian(cartographictemp);
-			}
+            //获取到的是经纬度弧度和高度
+            var temp1 = Cesium.Cartographic.fromCartesian( cartesian );
+            var h1 ;
+            if (_self.options.qdOffset) {
+                h1 = temp1.height + _self.options.qdOffset
+            }else{
+                h1 = temp1.height + 1;
+            };
+            var cartographictemp = Cesium.Cartographic.fromDegrees( temp1.longitude / Math.PI * 180, temp1.latitude / Math.PI * 180, h1);
+            cartesian = ellipsoid.cartographicToCartesian(cartographictemp);
 
             if (!cartesian) {
                 return;
             };
-
             _self.posArray.push(cartesian);
             if (_self._markers.length == 0) {
                 var startSphere = _self.viewer.entities.add({
@@ -126,13 +113,18 @@ class viewshed extends analyser {
                 });
                 _self._markers.push(redSphere);
 
-                _self.viewPosition = _self.posArray[0];
+                _self.viewPosition    = _self.posArray[0];
                 _self.viewPositionEnd = cartesian;
+                //计算起点到终点的距离
                 _self.viewDistance = _self.viewPositionEnd ? Cesium.Cartesian3.distance(_self.viewPosition, _self.viewPositionEnd) : (_self.options.viewDistance || 100.0);
-                _self.viewHeading = _self.viewPositionEnd ? getHeading(_self.viewPosition, _self.viewPositionEnd) : (_self.options.viewHeading || 0.0);
-                _self.viewPitch = _self.viewPositionEnd ? getPitch(_self.viewPosition, _self.viewPositionEnd) : (_self.options.viewPitch || 0.0);
+                //获取偏航角
+                _self.viewHeading  = _self.viewPositionEnd ? getHeading(_self.viewPosition, _self.viewPositionEnd) : (_self.options.viewHeading || 0.0);
+                //获取俯仰角
+                _self.viewPitch    = _self.viewPositionEnd ? getPitch(_self.viewPosition, _self.viewPositionEnd) : (_self.options.viewPitch || 0.0);
 
                 _self.state = _self.BEYONANALYSER_STATE.END;
+
+                //当起点和终点在地图上绘制完成，点击事件handler销毁
                 _self.handler.destroy();
                 _self.handler = null;
 
@@ -140,7 +132,7 @@ class viewshed extends analyser {
                 _self.update();
             }
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
-        //移动
+        //光标在地图上移动
         var info;
         _self.handler.setInputAction(function (movement) {
             var cartesian = _self.viewer.scene.pickPosition(movement.endPosition);
@@ -157,14 +149,14 @@ class viewshed extends analyser {
     remove() {
         if (this._markers.length == 0) {
             return false;
-        }
-
+        };
+        //移除添加的点位实体
         for (let index = 0; index < this._markers.length; index++) {
             var element = this._markers[index];
             this.viewer.entities.remove(element);
         }
         this._markers.length = 0;
-
+        //移除提示的label
         this.viewer.entities.remove(this._resultTip);
         this._resultTip = undefined;
     }
@@ -200,6 +192,7 @@ class viewshed extends analyser {
     //创建相机
     createLightCamera() {
         this.lightCamera = new Cesium.Camera(this.viewer.scene);
+        //设置相机的初始朝向
         this.lightCamera.position = this.viewPosition;
         // if (this.viewPositionEnd) {
         //     let direction = Cesium.Cartesian3.normalize(Cesium.Cartesian3.subtract(this.viewPositionEnd, this.viewPosition, new Cesium.Cartesian3()), new Cesium.Cartesian3());
@@ -207,11 +200,12 @@ class viewshed extends analyser {
         // }
         this.lightCamera.frustum.near = this.viewDistance * 0.001;
         this.lightCamera.frustum.far = this.viewDistance;
+        //水平视角
         const hr = Cesium.Math.toRadians(this.horizontalViewAngle);
+        //竖直视角
         const vr = Cesium.Math.toRadians(this.verticalViewAngle);
-        const aspectRatio =
-            (this.viewDistance * Math.tan(hr / 2) * 2) /
-            (this.viewDistance * Math.tan(vr / 2) * 2);
+        //计算视野的宽高比
+        const aspectRatio = (this.viewDistance * Math.tan(hr / 2) * 2) / (this.viewDistance * Math.tan(vr / 2) * 2);
         this.lightCamera.frustum.aspectRatio = aspectRatio;
         if (hr > vr) {
             this.lightCamera.frustum.fov = hr;
@@ -501,9 +495,15 @@ class viewshed extends analyser {
 //获取偏航角
 function getHeading(fromPosition, toPosition) {
     let finalPosition = new Cesium.Cartesian3();
+    /**
+     * 计算以finalPosition为原点的ENU坐标系
+     */
     let matrix4 = Cesium.Transforms.eastNorthUpToFixedFrame(fromPosition);
+    //计算该矩阵的逆矩阵
     Cesium.Matrix4.inverse(matrix4, matrix4);
+    //将toPosition转换到ENU坐标系中
     Cesium.Matrix4.multiplyByPoint(matrix4, toPosition, finalPosition);
+    //归一化最终位置向量
     Cesium.Cartesian3.normalize(finalPosition, finalPosition);
     return Cesium.Math.toDegrees(Math.atan2(finalPosition.x, finalPosition.y));
 }
@@ -511,9 +511,15 @@ function getHeading(fromPosition, toPosition) {
 //获取俯仰角
 function getPitch(fromPosition, toPosition) {
     let finalPosition = new Cesium.Cartesian3();
+    /**
+     * 计算以finalPosition为原点的ENU坐标系
+     */
     let matrix4 = Cesium.Transforms.eastNorthUpToFixedFrame(fromPosition);
+    //计算该矩阵的逆矩阵
     Cesium.Matrix4.inverse(matrix4, matrix4);
+    //将toPosition转换到ENU坐标系中
     Cesium.Matrix4.multiplyByPoint(matrix4, toPosition, finalPosition);
+    //归一化最终位置向量
     Cesium.Cartesian3.normalize(finalPosition, finalPosition);
     return Cesium.Math.toDegrees(Math.asin(finalPosition.z));
 }

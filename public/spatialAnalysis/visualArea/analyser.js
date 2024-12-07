@@ -3,7 +3,7 @@ class analyser {
         //初始化分析工具
         this._viewer = viewer;
         this.BEYONANALYSER_STATE = {
-            PREPARE: 0,
+            PREPARE: 0,  
             OPERATING: 1,
             END: 2
         };
